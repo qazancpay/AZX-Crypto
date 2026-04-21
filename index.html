@@ -2,58 +2,71 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Adsgram Test</title>
+  <title>Adsgram Coin Test</title>
   <script src="https://adsgram.ai/sdk.js"></script>
+
   <style>
     body {
-      font-family: Arial;
+      font-family: Arial, sans-serif;
       text-align: center;
       margin-top: 100px;
-      background: #f5f7fa;
+      background: #f2f6ff;
+    }
+
+    h1 {
+      color: #333;
     }
 
     button {
-      padding: 15px 30px;
+      padding: 15px 35px;
       font-size: 18px;
       border: none;
-      border-radius: 10px;
-      background: linear-gradient(90deg, #4facfe, #00f2fe);
+      border-radius: 12px;
+      background: linear-gradient(90deg, #4facfe, #00c6ff);
       color: white;
       cursor: pointer;
     }
 
     #coin {
-      margin-top: 20px;
-      font-size: 22px;
+      margin-top: 25px;
+      font-size: 24px;
       font-weight: bold;
+      color: #222;
     }
   </style>
 </head>
 <body>
 
-  <h1>Adsgram Test</h1>
+  <h1>🎬 Reklam izle & Coin qazan</h1>
 
-  <button onclick="showAd()">Reklam izle</button>
+  <button onclick="watchAd()">Reklam izle</button>
 
   <div id="coin">Coin: 0</div>
 
   <script>
     let coin = 0;
 
-    const ad = window.Adsgram.init({
-      blockId: "int-28280"
-    });
+    function watchAd() {
 
-    function showAd() {
+      // Adsgram yoxdursa
+      if (!window.Adsgram) {
+        alert("Adsgram yüklənmədi!");
+        return;
+      }
+
+      const ad = window.Adsgram.init({
+        blockId: "int-28280"
+      });
+
       ad.show()
         .then(() => {
-          // Reklam baxıldı
-          coin += 1;
+          coin++;
           document.getElementById("coin").innerText = "Coin: " + coin;
-          alert("Reklam bitdi! +1 coin qazandın");
+          alert("✅ Reklam bitdi! +1 coin qazandın");
         })
-        .catch(() => {
-          alert("Reklam açılmadı və ya bağlandı");
+        .catch((err) => {
+          console.log(err);
+          alert("❌ Reklam açılmadı (Telegram WebApp-da test et)");
         });
     }
   </script>
