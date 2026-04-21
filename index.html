@@ -4,7 +4,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover" />
 <title id="pageTitle">AZX Crypto</title>
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
 
 <script>
@@ -25,194 +25,269 @@ if (window.Telegram && window.Telegram.WebApp) {
 <style>
 /* --- AZX CRYPTO PREMIUM COLORS --- */
 :root {
-  --bg-main: #f8fafc;
-  --card-bg: rgba(255, 255, 255, 0.7);
-  --card-border: rgba(255, 255, 255, 0.5);
-  --text-main: #0f172a;
-  --text-muted: #64748b;
+  /* LIGHT THEME: White, Blue, Green, Red */
+  --bg-start: #F8F9FA; 
+  --bg-end: #E9ECEF;   
+  --card-bg: #FFFFFF; 
+  --card-border: rgba(37, 99, 235, 0.2);
+  --text-light: #FFFFFF;
+  --text-dark: #212529;
+  --text-muted: #6C757D;
   
-  --color-blue: #2563eb;
-  --color-red: #ef4444;
-  --color-green: #10b981;
+  --primary-blue: #0D6EFD;
+  --primary-green: #198754;
+  --primary-red: #DC3545;
   
-  --nav-bg: rgba(255, 255, 255, 0.85);
-  --input-bg: rgba(241, 245, 249, 0.8);
-  --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
-  --shadow-lg: 0 10px 25px -3px rgba(0, 0, 0, 0.1);
+  --menu-bg: rgba(255, 255, 255, 0.90);
+  --progress-bg: rgba(13, 110, 253, 0.1);
+  --input-text: #212529; 
+  --input-bg: #F1F3F5;
+  
+  --btn-gradient-start: #0D6EFD; 
+  --btn-gradient-end: #0B5ED7;   
+  --btn-shadow: rgba(13, 110, 253, 0.3); 
+  
+  --font-family: 'Montserrat', sans-serif;
 }
 
+/* DARK THEME */
 body.dark-theme {
-  --bg-main: #020617;
-  --card-bg: rgba(15, 23, 42, 0.6);
-  --card-border: rgba(255, 255, 255, 0.08);
-  --text-main: #f8fafc;
-  --text-muted: #94a3b8;
+  --bg-start: #0B0E14;
+  --bg-end: #151A22;   
+  --card-bg: #1A202C;
+  --card-border: rgba(13, 110, 253, 0.3);
+  --text-light: #F8F9FA;
+  --text-dark: #F8F9FA;
+  --text-muted: #ADB5BD;
   
-  --color-blue: #3b82f6;
-  --color-red: #f87171;
-  --color-green: #34d399;
+  --primary-blue: #3B82F6;
+  --primary-green: #20C997;
+  --primary-red: #FA5252;
   
-  --nav-bg: rgba(15, 23, 42, 0.85);
-  --input-bg: rgba(30, 41, 59, 0.8);
-  --shadow-lg: 0 10px 25px -3px rgba(0, 0, 0, 0.5);
+  --menu-bg: rgba(26, 32, 44, 0.95);
+  --progress-bg: rgba(59, 130, 246, 0.15);
+  --input-text: #F8F9FA; 
+  --input-bg: #2D3748;
+  
+  --btn-shadow: rgba(59, 130, 246, 0.25); 
 }
 
-/* --- GENERAL STYLES --- */
+/* --- ÜMUMİ STİLLƏR --- */
 *{box-sizing:border-box;margin:0;padding:0;}
 body{
-  font-family:'Outfit',sans-serif;
-  background-color: var(--bg-main);
-  color:var(--text-main);
-  min-height:var(--tg-viewport-stable-height, 100vh);
-  user-select:none;
-  -webkit-user-select:none;
-  -webkit-tap-highlight-color:transparent;
+  font-family: var(--font-family);
+  background: linear-gradient(180deg, var(--bg-start), var(--bg-end));
+  background-attachment: fixed;
+  color: var(--text-dark);
+  min-height: var(--tg-viewport-stable-height, 100vh);
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-tap-highlight-color: transparent;
   transition: background-color 0.4s ease, color 0.4s ease; 
-  padding-bottom: 100px;
-  overflow-x: hidden;
+  padding-bottom: 100px; 
 }
 
-/* BACKGROUND ORBS FOR RGB EFFECT */
-.bg-orb { position: fixed; border-radius: 50%; filter: blur(90px); z-index: -1; opacity: 0.5; animation: float 10s infinite alternate; }
-.orb-blue { top: -10%; left: -20%; width: 350px; height: 350px; background: var(--color-blue); }
-.orb-red { top: 40%; right: -20%; width: 250px; height: 250px; background: var(--color-red); animation-delay: -2s; }
-.orb-green { bottom: -10%; left: 10%; width: 300px; height: 300px; background: var(--color-green); animation-delay: -4s; }
+.container { max-width: 500px; margin: auto; padding: 30px 20px 20px; } 
 
-@keyframes float {
-  0% { transform: translateY(0) scale(1); }
-  100% { transform: translateY(30px) scale(1.1); }
-}
+.page { display: none; animation: slideUp .4s cubic-bezier(0.16, 1, 0.3, 1); }
+.page.active { display: block; }
+@keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
-.container{max-width:500px;margin:auto;padding:30px 20px 20px;} 
-
-.page{display:none;animation:slideUp .5s cubic-bezier(0.16, 1, 0.3, 1);}
-.page.active{display:block;}
-@keyframes slideUp{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
-
-/* GLASSMORPHISM CARDS */
-.glass-card {
+/* YENİ KART DİZAYNI */
+.balance-card, .ad-card, .profile-card {
   background: var(--card-bg);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid var(--card-border);
   border-radius: 20px;
-  padding: 24px;
-  margin-bottom: 20px;
-  box-shadow: var(--shadow-lg);
-}
-
-/* BALANCE SECTION */
-.balance-widget {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
+  padding: 30px 20px;
+  margin-bottom: 25px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  text-align: center;
+  border: 1px solid var(--card-border);
+  transition: all 0.4s ease;
   position: relative;
   overflow: hidden;
-  background: linear-gradient(135deg, rgba(37,99,235,0.1), rgba(16,185,129,0.05));
 }
-.balance-widget::before {
-  content: ''; position: absolute; right: -20px; top: -20px; width: 100px; height: 100px;
-  background: var(--color-blue); opacity: 0.2; filter: blur(30px); border-radius: 50%;
+
+body.dark-theme .balance-card, body.dark-theme .ad-card, body.dark-theme .profile-card {
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
 }
-.balance-label { font-size: 13px; color: var(--text-muted); font-weight: 600; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px;}
-.balance-amount-wrap { display: flex; align-items:baseline; gap: 8px; }
-.balance-amount { font-size: 48px; font-weight: 900; color: var(--text-main); line-height: 1; }
-.balance-currency { font-size: 20px; font-weight: 800; color: var(--color-green); }
 
-/* ADS STATS & BUTTON */
-.stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 15px; }
-.stat-box { background: var(--input-bg); border-radius: 16px; padding: 15px; border: 1px solid var(--card-border); text-align: center; }
-.stat-box .val { font-size: 24px; font-weight: 900; color: var(--text-main); }
-.stat-box .lbl { font-size: 12px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; margin-top: 4px; }
+/* Karta incə üst rəng xətti əlavəsi */
+.balance-card::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 4px; background: var(--primary-green); }
+.ad-card::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 4px; background: var(--primary-blue); }
 
-.progress-track { height: 8px; background: var(--input-bg); border-radius: 8px; overflow: hidden; margin-top: 20px; }
-.progress-bar { height: 100%; background: var(--color-blue); width: 0%; transition: width 0.8s ease; border-radius: 8px; box-shadow: 0 0 10px var(--color-blue); }
+.balance-card h3 { font-size: 13px; color: var(--text-muted); margin-bottom: 10px; text-transform: uppercase; letter-spacing: 2px; font-weight: 700; }
+.balance-card .amount-wrap { display: flex; align-items: center; justify-content: center; gap: 10px; }
+.balance-card .amount { font-size: 46px; font-weight: 900; color: var(--text-dark); letter-spacing: -1px; }
+.balance-card .currency { font-size: 20px; font-weight: 800; color: var(--primary-green); background: rgba(32, 201, 151, 0.1); padding: 5px 12px; border-radius: 8px; }
 
-.primary-btn { 
-  width: 100%; padding: 18px; font-size: 16px; font-weight: 800; border: none; border-radius: 16px;
-  background: var(--color-blue); color: #fff; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px;
-  transition: all 0.3s ease; margin-top: 25px; box-shadow: 0 8px 20px rgba(37, 99, 235, 0.3);
+.method-list { display: flex; justify-content: center; margin: 20px 0; }
+.method { width: 100%; max-width: 280px; padding: 20px; border-radius: 16px; background: var(--input-bg); color: var(--text-dark); text-align: center; font-weight: 800; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 15px; border: 1px solid var(--card-border); transition: all 0.3s; position: relative; }
+.method:active { transform: scale(0.96); }
+.method-logo { width: 45px; height: 45px; border-radius: 50%; object-fit: cover; box-shadow: 0 4px 15px rgba(0,0,0,0.1); pointer-events: none; }
+.method-text { font-size: 18px; }
+.min-withdraw-label { position: absolute; top: -10px; right: -10px; font-size: 11px; font-weight: 800; color: var(--text-light); background: var(--primary-red); padding: 6px 12px; border-radius: 20px; box-shadow: 0 4px 10px rgba(220, 53, 69, 0.3); }
+
+.ad-card { padding: 35px 25px; }
+.ad-card h2 { font-size: 22px; color: var(--text-dark); margin-bottom: 10px; font-weight: 900; }
+.ad-card p { margin: 4px 0; color: var(--text-muted); font-size: 15px; font-weight: 600; }
+
+/* GÖREVLƏR */
+.task-list { display: flex; flex-direction: column; gap: 20px; margin-bottom: 20px; }
+.task-item { background: var(--card-bg); border: 1px solid var(--card-border); border-left: 4px solid var(--primary-blue); border-radius: 16px; padding: 20px; position: relative; text-align: left; box-shadow: 0 5px 15px rgba(0,0,0,0.02); transition: all 0.3s; }
+
+.task-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
+.task-title { font-size: 18px; font-weight: 800; display: flex; align-items: center; gap: 12px; color: var(--text-dark); }
+.task-icon { display: flex; align-items: center; justify-content: center; width: 45px; height: 45px; border-radius: 12px; color: white; background: var(--primary-blue); box-shadow: 0 4px 15px var(--btn-shadow); }
+.task-reward-badge { background: rgba(32, 201, 151, 0.1); color: var(--primary-green); padding: 8px 16px; border-radius: 8px; font-weight: 800; font-size: 14px; border: 1px solid rgba(32, 201, 151, 0.2); }
+.task-desc { font-size: 14px; color: var(--text-muted); font-weight: 600; margin-bottom: 20px; line-height: 1.6; }
+
+.task-btn { width: 100%; padding: 15px; font-size: 16px; font-weight: 800; border: none; border-radius: 12px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; transition: all 0.2s; font-family: var(--font-family); }
+.task-btn:active:not(:disabled) { transform: scale(0.97); }
+.task-btn.action { background: var(--primary-blue); color: white; box-shadow: 0 8px 20px var(--btn-shadow); }
+.task-btn.completed { background: var(--input-bg); color: var(--primary-green); cursor: not-allowed; border: 1px solid var(--primary-green); }
+.task-btn.waiting { background: var(--progress-bg) !important; color: var(--primary-blue) !important; cursor: wait !important; }
+
+.stats { display: flex; justify-content: space-between; margin-top: 30px; gap: 15px; }
+.stat { background: var(--input-bg); border-radius: 12px; padding: 20px 15px; flex: 1; border: 1px solid var(--card-border); position: relative; overflow: hidden; }
+.stat::after { content: ''; position: absolute; right: -10px; bottom: -10px; width: 50px; height: 50px; background: var(--progress-bg); border-radius: 50%; z-index: 0; }
+.stat span { position: relative; z-index: 1; display: block; font-size: 26px; font-weight: 900; color: var(--text-dark); margin-bottom: 5px; }
+.stat label { position: relative; z-index: 1; font-size: 12px; color: var(--text-muted); font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
+
+.progress { height: 10px; background: var(--input-bg); border-radius: 10px; overflow: hidden; margin-top: 30px; border: 1px solid var(--card-border); }
+.progress-fill { height: 100%; background: var(--primary-green); width: 0%; transition: width .8s cubic-bezier(0.16, 1, 0.3, 1); border-radius: 10px; } 
+
+.ad-btn { width: 100%; margin-top: 30px; padding: 18px; font-size: 17px; font-weight: 800; border: none; border-radius: 14px; color: var(--text-light); cursor: pointer; background: var(--primary-blue); box-shadow: 0 8px 25px var(--btn-shadow); position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; transition: all 0.2s; font-family: var(--font-family); }
+.ad-btn:active:not(:disabled) { transform: scale(0.97); }
+.ad-btn.waiting { background: var(--progress-bg) !important; color: var(--primary-blue) !important; cursor: not-allowed; box-shadow: none !important; border: 1px dashed var(--primary-blue) !important; }
+.ad-btn-content { position: relative; z-index: 2; display: flex; align-items: center; gap: 12px; }
+
+#msg { margin-top: 15px; font-size: 14px; font-weight: 700; padding: 0; color: var(--primary-red); }
+#adRewardNotificationContainer { position: relative; height: 0; overflow: visible; }
+.reward-msg { position: absolute; top: -10px; left: 50%; transform: translateX(-50%) translateY(-100%); background: var(--primary-green); color: #fff; padding: 10px 25px; border-radius: 30px; box-shadow: 0 10px 25px rgba(32, 201, 151, 0.3); font-weight: 800; font-size: 15px; opacity: 0; z-index: 100; white-space: nowrap; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+.reward-msg.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+/* FLOATING MENU */
+.menu { position: fixed; bottom: 25px; left: 50%; transform: translateX(-50%); width: 90%; max-width: 420px; display: flex; justify-content: space-between; background: var(--menu-bg); padding: 10px; border-radius: 20px; box-shadow: 0 20px 40px rgba(0,0,0,.1); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); z-index: 999; border: 1px solid var(--card-border); }
+.menu button { flex: 1; margin: 0 5px; padding: 10px 0; border: none; border-radius: 14px; background: transparent; color: var(--text-muted); cursor: pointer; transition: all 0.3s ease; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 65px; font-family: var(--font-family); }
+.menu button .nav-icon { width: 24px; height: 24px; margin-bottom: 5px; transition: 0.3s; stroke-width: 2px; }
+.menu button .nav-text { font-size: 11px; font-weight: 700; transition: 0.3s; }
+.menu button.active { background: var(--primary-blue); color: #fff; box-shadow: 0 5px 15px var(--btn-shadow); transform: translateY(-5px); }
+.menu button.active .nav-icon { stroke-width: 2.5px; } 
+
+/* --- PROFIL SƏHİFƏSİ --- */
+.profile-header { display: flex; align-items: center; justify-content: center; flex-direction: column; margin-bottom: 35px; }
+.profile-avatar { width: 100px; height: 100px; background: var(--primary-blue); border-radius: 30%; display: flex; align-items: center; justify-content: center; color: #fff; margin-bottom: 20px; box-shadow: 0 10px 25px var(--btn-shadow); position: relative; border: 3px solid var(--card-bg); transform: rotate(45deg); overflow: hidden; }
+.profile-avatar > * { transform: rotate(-45deg); }
+.profile-avatar .default-icon { width: 45px; height: 45px; stroke-width: 2px; }
+.profile-avatar img { width: 140%; height: 140%; object-fit: cover; display: none; }
+.profile-avatar.has-image img { display: block; }
+.profile-avatar.has-image .default-icon { display: none; }
+
+.profile-name { font-size: 22px; font-weight: 900; color: var(--text-dark); margin-bottom: 8px; }
+.profile-id { font-size: 14px; font-weight: 700; color: var(--text-muted); background: var(--input-bg); padding: 8px 20px; border-radius: 12px; border: 1px dashed var(--card-border); }
+
+.settings-list { text-align: left; background: var(--input-bg); border-radius: 16px; padding: 15px 25px; margin-bottom: 25px; border: 1px solid var(--card-border); }
+.setting-item { display: flex; justify-content: space-between; align-items: center; padding: 20px 0; border-bottom: 1px solid var(--card-border); }
+.setting-item:last-child { border-bottom: none; }
+.setting-info { display: flex; align-items: center; gap: 15px; font-weight: 700; font-size: 16px; color: var(--text-dark); }
+.setting-icon { display: flex; align-items: center; justify-content: center; background: var(--card-bg); width: 42px; height: 42px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); color: var(--primary-blue); }
+
+.toggle-switch { width: 54px; height: 30px; background-color: #CBD5E1; border-radius: 30px; position: relative; cursor: pointer; transition: 0.4s; }
+body.dark-theme .toggle-switch { background-color: var(--primary-blue); }
+.toggle-thumb { width: 24px; height: 24px; background-color: #fff; border-radius: 50%; position: absolute; top: 3px; left: 3px; transition: 0.4s; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 8px rgba(0,0,0,0.2); }
+body.dark-theme .toggle-thumb { transform: translateX(24px); }
+.toggle-thumb i { width: 14px; height: 14px; color: #F59E0B; }
+body.dark-theme .toggle-thumb i { color: #1E293B; }
+
+.lang-select { background: var(--card-bg); border: 1px solid var(--card-border); color: var(--text-dark); font-weight: 800; padding: 10px 16px; border-radius: 10px; outline: none; cursor: pointer; font-family: var(--font-family); appearance: none; -webkit-appearance: none; padding-right: 30px; background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e"); background-repeat: no-repeat; background-position: right 10px center; background-size: 16px; }
+body.dark-theme .lang-select { background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23F8FAFC' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e"); }
+
+.profile-btn { width: 100%; padding: 18px; margin-bottom: 12px; border-radius: 14px; font-weight: 800; font-size: 16px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 12px; border: none; transition: all 0.2s; font-family: var(--font-family); }
+.profile-btn:active { transform: scale(0.97); }
+.btn-share { background: var(--primary-green); color: white; box-shadow: 0 8px 25px rgba(32, 201, 151, 0.3); }
+
+#form { display: none; }
+#form input { width: 100%; padding: 20px; margin: 12px 0; border-radius: 14px; border: 1px solid var(--card-border); background: var(--input-bg); color: var(--input-text); font-size: 16px; font-weight: 600; outline: none; transition: all 0.3s; font-family: var(--font-family); }
+#form input:focus { border-color: var(--primary-blue); background: var(--card-bg); box-shadow: 0 0 0 4px var(--progress-bg); }
+#form input::placeholder { color: var(--text-muted); opacity: 0.7; font-weight: 500; }
+#form button { width: 100%; padding: 18px; margin-top: 25px; border: none; border-radius: 14px; background: var(--primary-blue); color: var(--text-light); font-weight: 800; font-size: 17px; cursor: pointer; box-shadow: 0 8px 25px var(--btn-shadow); display: flex; align-items: center; justify-content: center; gap: 10px; transition: all 0.2s; font-family: var(--font-family); }
+#form button:active { transform: scale(0.97); }
+
+.fee-calc-box { font-size: 14px; font-weight: 600; color: var(--text-muted); margin: 5px 0 20px; text-align: left; padding: 18px; background: var(--input-bg); border-radius: 12px; border-left: 4px solid var(--primary-red); display: none; }
+.fee-calc-box span { color: var(--text-dark); font-weight: 800; }
+
+.alert { margin-top: 20px; padding: 16px; border-radius: 12px; display: none; font-weight: 800; text-align: center; font-size: 15px; animation: slideUp 0.3s ease; }
+.alert.error { background: rgba(220, 53, 69, 0.1); color: var(--primary-red); border: 1px solid rgba(220, 53, 69, 0.3); }
+.alert.success { background: rgba(32, 201, 151, 0.1); color: var(--primary-green); border: 1px solid rgba(32, 201, 151, 0.3); }
+
+.history-card { background: var(--card-bg); border-radius: 20px; padding: 30px 20px; margin-top: 35px; border: 1px solid var(--card-border); text-align: left; box-shadow: 0 8px 30px rgba(0,0,0,0.05); }
+.history-title { font-size: 19px; font-weight: 900; color: var(--text-dark); margin-bottom: 25px; text-align: center; letter-spacing: 0.5px; }
+.history-list { display: flex; flex-direction: column; gap: 15px; }
+.history-item { background: var(--input-bg); padding: 18px; border-radius: 14px; border: 1px solid var(--card-border); display: flex; justify-content: space-between; align-items: center; transition: transform 0.2s; }
+.history-item:hover { transform: translateX(5px); border-color: var(--primary-blue); }
+.history-info { display: flex; flex-direction: column; gap: 8px; }
+.history-method { font-weight: 800; font-size: 16px; color: var(--text-dark); display: flex; align-items: center; gap: 10px; }
+.history-method img { width: 24px; height: 24px; border-radius: 50%; }
+.history-date { font-size: 12px; color: var(--text-muted); font-weight: 600; }
+.history-status-wrap { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; }
+.history-amount { font-weight: 900; font-size: 16px; color: var(--text-dark); }
+.history-status { font-size: 11px; font-weight: 800; padding: 5px 12px; border-radius: 8px; background: rgba(220, 53, 69, 0.1); color: var(--primary-red); border: 1px solid rgba(220, 53, 69, 0.2); letter-spacing: 0.5px; text-transform: uppercase; }
+.history-empty { text-align: center; font-size: 15px; color: var(--text-muted); padding: 40px 20px; font-weight: 700; background: var(--input-bg); border-radius: 14px; border: 2px dashed var(--card-border); }
+
+/* YENİ TAM EKRAN LOADING EKRANI */
+#loadingScreen {
+    position: fixed; top: 0; left: 0; width: 100%; height: var(--tg-viewport-stable-height, 100vh);
+    background: var(--bg-start);
+    display: flex; flex-direction: column; justify-content: center; align-items: center;
+    z-index: 99999; transition: opacity 0.6s ease-out; user-select: none;
 }
-.primary-btn:active:not(:disabled) { transform: translateY(2px); box-shadow: 0 4px 10px rgba(37, 99, 235, 0.2); }
-.primary-btn.waiting { background: var(--input-bg); color: var(--text-main); box-shadow: none; border: 1px solid var(--card-border); cursor: not-allowed; }
 
-/* TASKS */
-.task-item { display: flex; flex-direction: column; gap: 15px; }
-.task-header { display: flex; align-items: center; justify-content: space-between; }
-.task-icon-wrap { display: flex; align-items: center; gap: 12px; font-weight: 800; font-size: 18px; }
-.t-icon { background: rgba(239, 68, 68, 0.1); color: var(--color-red); width: 45px; height: 45px; border-radius: 12px; display: flex; align-items: center; justify-content: center; }
-.task-reward { background: rgba(16, 185, 129, 0.1); color: var(--color-green); font-weight: 800; padding: 6px 12px; border-radius: 10px; font-size: 14px; }
-.task-desc { font-size: 14px; color: var(--text-muted); font-weight: 500; }
-.task-btn { width: 100%; padding: 15px; background: var(--color-red); color: #fff; font-weight: 800; border: none; border-radius: 12px; display: flex; justify-content: center; align-items: center; gap: 8px; transition: 0.3s; box-shadow: 0 5px 15px rgba(239, 68, 68, 0.3); cursor: pointer;}
-.task-btn.completed { background: var(--input-bg); color: var(--text-muted); box-shadow: none; cursor: not-allowed; }
+.loader-ring {
+    width: 100px; height: 100px;
+    border-radius: 50%;
+    border: 4px solid var(--card-border);
+    border-top-color: var(--primary-blue);
+    border-right-color: var(--primary-green);
+    animation: spinRing 1.5s linear infinite;
+    margin-bottom: 30px;
+    box-shadow: 0 0 30px rgba(13, 110, 253, 0.2);
+}
+@keyframes spinRing { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
-/* WITHDRAWAL */
-.withdraw-method { background: var(--input-bg); border: 1px solid var(--card-border); padding: 20px; border-radius: 16px; text-align: center; cursor: pointer; transition: 0.3s; display: flex; flex-direction: column; align-items: center; gap: 10px;}
-.withdraw-method:active { transform: scale(0.97); }
-.w-icon { width: 50px; height: 50px; background: var(--color-blue); color: #fff; border-radius: 14px; display: flex; align-items: center; justify-content: center; }
-.w-name { font-weight: 800; font-size: 16px; }
-.w-min { font-size: 12px; color: var(--color-green); background: rgba(16, 185, 129, 0.1); padding: 4px 10px; border-radius: 8px; font-weight: 700; }
+.loader-title { font-size: 28px; font-weight: 900; color: var(--text-dark); margin-bottom: 10px; letter-spacing: 3px; font-family: var(--font-family); }
+.loader-subtitle { font-size: 14px; font-weight: 600; color: var(--primary-green); letter-spacing: 1px; margin-bottom: 40px; text-transform: uppercase; }
 
-.input-field { width: 100%; padding: 16px; margin-bottom: 15px; background: var(--input-bg); border: 1px solid var(--card-border); color: var(--text-main); font-family: 'Outfit', sans-serif; font-size: 15px; font-weight: 600; border-radius: 12px; outline: none; transition: 0.3s; }
-.input-field:focus { border-color: var(--color-blue); box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1); }
+.loader-bar-wrap { position: relative; width: 220px; height: 8px; background: var(--input-bg); border-radius: 10px; overflow: hidden; border: 1px solid var(--card-border); }
+.loader-fill { position: absolute; top:0; left:0; height:100%; width:0%; border-radius:10px; background: linear-gradient(90deg, var(--primary-blue), var(--primary-green)); animation: fillAnim 3s ease-in-out forwards; }
+@keyframes fillAnim { 0% { width: 0%; } 100% { width: 100%; } }
 
-/* PROFILE */
-.user-info { display: flex; align-items: center; gap: 15px; margin-bottom: 25px; }
-.avatar { width: 70px; height: 70px; background: var(--color-blue); border-radius: 18px; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 24px; font-weight: 900; overflow: hidden;}
-.avatar img { width: 100%; height: 100%; object-fit: cover; display: none;}
-.user-details h2 { font-size: 22px; font-weight: 800; }
-.user-details span { font-size: 13px; color: var(--text-muted); font-weight: 600; }
+#taskNotification { position: fixed; top: 30px; left: 50%; transform: translate(-50%, -100px); background: var(--primary-green); color: #fff; padding: 16px 25px; border-radius: 14px; box-shadow: 0 15px 30px rgba(32, 201, 151, 0.3); font-weight: 800; font-size: 15px; opacity: 0; z-index: 10000; transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1); text-align: center; display: flex; align-items: center; gap: 12px; white-space: nowrap; }
+.notification-show { opacity: 1 !important; transform: translate(-50%, 0) !important; }
+.notification-hide { opacity: 0; transform: translate(-50%, -100px); }
 
-.setting-row { display: flex; justify-content: space-between; align-items: center; padding: 15px 0; border-bottom: 1px solid var(--card-border); }
-.setting-row:last-child { border-bottom: none; }
-.s-label { display: flex; align-items: center; gap: 10px; font-weight: 600; }
-
-/* TOGGLE & SELECT */
-.toggle { width: 46px; height: 26px; background: var(--text-muted); border-radius: 20px; position: relative; cursor: pointer; transition: 0.3s; }
-body.dark-theme .toggle { background: var(--color-blue); }
-.t-thumb { width: 20px; height: 20px; background: #fff; border-radius: 50%; position: absolute; top: 3px; left: 3px; transition: 0.3s; }
-body.dark-theme .t-thumb { transform: translateX(20px); }
-
-select.input-field { appearance: none; padding-right: 35px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 15px center; cursor: pointer; margin-bottom: 0; width: 100px; padding: 8px 15px;}
-
-/* BOTTOM NAVIGATION (PILL DESIGN) */
-.dock { position: fixed; bottom: 25px; left: 50%; transform: translateX(-50%); width: 90%; max-width: 400px; background: var(--nav-bg); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid var(--card-border); border-radius: 24px; padding: 8px; display: flex; justify-content: space-between; box-shadow: var(--shadow-lg); z-index: 999; }
-.dock-btn { flex: 1; height: 55px; border: none; background: transparent; color: var(--text-muted); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; border-radius: 18px; cursor: pointer; transition: 0.3s; }
-.dock-btn span { font-size: 11px; font-weight: 700; }
-.dock-btn.active { background: var(--input-bg); color: var(--color-blue); }
-.dock-btn.active svg { transform: scale(1.1); stroke: var(--color-blue); }
-
-/* ALERTS & NOTIFICATIONS */
-#msg { font-size: 13px; font-weight: 700; color: var(--color-red); margin-top: 10px; text-align: center; }
-.toast { position: fixed; top: 20px; left: 50%; transform: translate(-50%, -100px); background: var(--text-main); color: var(--bg-main); padding: 12px 24px; border-radius: 30px; font-weight: 700; font-size: 14px; opacity: 0; transition: 0.4s ease; z-index: 10000; display: flex; align-items: center; gap: 8px; box-shadow: var(--shadow-lg); }
-.toast.show { transform: translate(-50%, 0); opacity: 1; }
-
-/* MODALS */
-.modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.6); backdrop-filter: blur(5px); z-index: 9999; display: none; align-items: center; justify-content: center; opacity: 0; transition: 0.3s; }
+/* MODAL STYLES */
+.modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.7); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); z-index: 9999; display: none; justify-content: center; align-items: center; opacity: 0; transition: opacity 0.3s ease; }
 .modal-overlay.show { display: flex; opacity: 1; }
-.modal-box { background: var(--bg-main); width: 90%; max-width: 350px; border-radius: 24px; padding: 30px 20px; text-align: center; transform: scale(0.9); transition: 0.3s; border: 1px solid var(--card-border); }
-.modal-overlay.show .modal-box { transform: scale(1); }
-.share-opt { width: 100%; padding: 15px; margin-bottom: 10px; border-radius: 14px; border: none; font-weight: 700; font-size: 15px; display: flex; align-items: center; justify-content: center; gap: 10px; cursor: pointer; color: #fff;}
-.share-opt.tg { background: #2AABEE; }
-.share-opt.wa { background: #25D366; }
-.share-opt.cp { background: var(--input-bg); color: var(--text-main); border: 1px solid var(--card-border); }
 
-/* LOADER */
-#loader { position: fixed; inset: 0; background: var(--bg-main); z-index: 99999; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: 0.5s ease; }
-.loader-icon { color: var(--color-blue); width: 60px; height: 60px; animation: pulse 1.5s infinite; margin-bottom: 20px; }
-.loader-text { font-size: 28px; font-weight: 900; letter-spacing: 2px; background: linear-gradient(90deg, var(--color-blue), var(--color-green)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-@keyframes pulse { 0% { transform: scale(0.95); opacity: 0.8; } 50% { transform: scale(1.05); opacity: 1; } 100% { transform: scale(0.95); opacity: 0.8; } }
+.share-modal { background: var(--card-bg); width: 90%; max-width: 350px; border-radius: 24px; padding: 40px 25px; box-shadow: 0 25px 50px rgba(0,0,0,0.3); border: 1px solid var(--card-border); transform: scale(0.9) translateY(30px); transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); text-align: center; }
+.modal-overlay.show .share-modal { transform: scale(1) translateY(0); }
+.share-modal-title { font-size: 22px; font-weight: 900; color: var(--text-dark); margin-bottom: 30px; }
+
+.share-btn-action { width: 100%; padding: 18px; border-radius: 14px; border: none; font-weight: 800; font-size: 16px; margin-bottom: 15px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 12px; color: #fff; transition: transform 0.2s; font-family: var(--font-family); }
+.share-btn-action:active { transform: scale(0.97); }
+.share-btn-action.tg { background: #2AABEE; box-shadow: 0 8px 20px rgba(42, 171, 238, 0.3); }
+.share-btn-action.wa { background: #25D366; box-shadow: 0 8px 20px rgba(37, 211, 102, 0.3); }
+.share-btn-action.copy { background: var(--input-bg); color: var(--text-dark); border: 1px solid var(--card-border); box-shadow: none; }
+.share-btn-action.close-modal { background: transparent; color: var(--primary-red); box-shadow: none; margin-bottom: 0; margin-top: 10px; border: 1px dashed var(--primary-red); }
 </style>
 </head>
 <body id="body">
 
-<div class="bg-orb orb-blue"></div>
-<div class="bg-orb orb-red"></div>
-<div class="bg-orb orb-green"></div>
-
 <script>
-function safeGet(k,d=0){try{return JSON.parse(localStorage.getItem(k))??d;}catch{return d;}}
-function safeSet(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}}
+function safeGet(k, d=0) { try { return JSON.parse(localStorage.getItem(k)) ?? d; } catch { return d; } }
+function safeSet(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch(e) {} }
 
 let tgUser = null;
 let userRefId = null;
@@ -228,10 +303,10 @@ if (window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.initData
     }
 }
 
-const THEME_KEY = 'theme_azx_' + userRefId;
-const LANG_KEY = 'lang_azx_' + userRefId;
+const THEME_KEY = 'theme_' + userRefId;
+const LANG_KEY = 'lang_' + userRefId;
 
-const savedTheme = safeGet(THEME_KEY, 'dark'); // Default to dark for premium feel
+const savedTheme = safeGet(THEME_KEY, 'dark'); // Default Dark Theme
 if(savedTheme === 'dark') {
     document.getElementById('body').classList.add('dark-theme');
 } else {
@@ -239,290 +314,387 @@ if(savedTheme === 'dark') {
 }
 </script>
 
-<div id="loader">
-  <i data-lucide="hexagon" class="loader-icon" stroke-width="2.5"></i>
-  <div class="loader-text">AZX CRYPTO</div>
+<div id="loadingScreen" oncontextmenu="return false;">
+  <div class="loader-ring"></div>
+  <div class="loader-title">AZX CRYPTO</div>
+  <div class="loader-subtitle">Earn Real Rewards</div>
+  <div class="loader-bar-wrap">
+    <div class="loader-fill"></div>
+  </div>
 </div>
 
-<div class="toast" id="toastBox">
-  <i data-lucide="check-circle-2" style="width: 18px; height: 18px;"></i>
-  <span id="toastMsg"></span>
+<div id="taskNotification" class="notification-hide">
+    <i data-lucide="check-circle-2" style="width: 22px; height: 22px;"></i>
+    <span id="taskNotificationText"></span>
 </div>
 
 <div class="container">
-  
   <div id="adsPage" class="page active">
-    <div class="glass-card balance-widget">
-      <div class="balance-label" data-translate-key="yourBalance">Your Balance</div>
-      <div class="balance-amount-wrap">
-          <div class="balance-amount" id="balance">0.000</div>
-          <div class="balance-currency">AZX</div>
+    <div class="balance-card">
+      <h3 data-translate-key="yourBalance">Your Balance</h3>
+      <div class="amount-wrap">
+          <div class="amount"><span id="balance">0.000</span></div>
+          <div class="currency">TON</div>
       </div>
     </div>
     
-    <div class="glass-card"> 
-      <h2 style="font-size: 20px; font-weight: 800; margin-bottom: 5px;" data-translate-key="dailyAdsHeader">Watch & Earn</h2>
-      <p style="font-size: 14px; color: var(--text-muted); font-weight: 500;" id="adRewardText" data-translate-key="adReward">Earn <b>0.002 AZX</b> per ad</p>
+    <div id="adRewardNotificationContainer"></div> 
+    <div class="ad-card"> 
+      <h2 data-translate-key="dailyAdsHeader">Daily Ads</h2>
+      <p id="adRewardText" data-translate-key="adReward">Earn <b>0.002 TON</b> for each ad</p>
       
-      <div class="stats-grid">
-        <div class="stat-box">
-          <div class="val" id="adsCount">0</div>
-          <div class="lbl" data-translate-key="watched">Watched</div>
-        </div>
-        <div class="stat-box">
-          <div class="val" data-translate-key="maxCount">50</div>
-          <div class="lbl" data-translate-key="maximum">Maximum</div>
-        </div>
+      <div class="stats">
+        <div class="stat"><span id="adsCount">0</span><label data-translate-key="watched">Watched</label></div>
+        <div class="stat"><span data-translate-key="maxCount">50</span><label data-translate-key="maximum">Maximum</label></div>
       </div>
       
-      <div class="progress-track"><div class="progress-bar" id="progress"></div></div>
-      <p style="margin-top:10px; font-weight:600; font-size: 13px; text-align: center; color: var(--text-muted);" data-translate-key="progressText">Progress: <span id="progressTextSpan">0/50</span></p>
+      <div class="progress"><div class="progress-fill" id="progress"></div></div>
+      <p style="margin-top:15px; font-weight:800; color: var(--text-dark); font-size: 14px;" data-translate-key="progressText">Progress: <span id="progressTextSpan">0/50</span></p>
       
-      <button id="adBtn" class="primary-btn">
-        <i data-lucide="play" fill="currentColor"></i>
-        <span id="adBtnText" data-translate-key="watchAd">Watch Ad</span>
+      <button id="adBtn" class="ad-btn">
+        <span class="ad-btn-content">
+          <i data-lucide="play" style="width: 22px; height: 22px; fill: white;"></i>
+          <span data-translate-key="watchAd">Watch Ad</span>
+        </span>
       </button>
       <div id="msg"></div> 
     </div>
   </div>
   
   <div id="tasksPage" class="page">
-    <div class="glass-card balance-widget">
-      <div class="balance-label" data-translate-key="yourBalance">Your Balance</div>
-      <div class="balance-amount-wrap">
-          <div class="balance-amount" id="balance3">0.000</div>
-          <div class="balance-currency">AZX</div>
+    <div class="balance-card">
+      <h3 data-translate-key="yourBalance">Your Balance</h3>
+      <div class="amount-wrap">
+          <div class="amount"><span id="balance3">0.000</span></div>
+          <div class="currency">TON</div>
       </div>
     </div>
 
-    <div class="glass-card task-item">
-        <div class="task-header">
-            <div class="task-icon-wrap">
-                <div class="t-icon"><i data-lucide="users"></i></div>
-                <span data-translate-key="joinCommunityTitle">Join AZX</span>
+    <div class="task-list">
+        <div class="task-item">
+            <div class="task-header">
+                <div class="task-title">
+                    <div class="task-icon"><i data-lucide="users" style="width:24px;height:24px;"></i></div>
+                    <span data-translate-key="joinCommunityTitle">Join Community</span>
+                </div>
+                <div class="task-reward-badge" id="taskJoinRewardBadge">0.10 TON</div>
             </div>
-            <div class="task-reward">0.10 AZX</div>
+            <div class="task-desc" data-translate-key="joinCommunityDesc">Join our official community channel and earn!</div>
+            <button id="joinBtn" class="task-btn action">
+                <i data-lucide="send" style="width:20px;height:20px;"></i>
+                <span data-translate-key="joinBtnText">Join Channel</span>
+            </button>
         </div>
-        <div class="task-desc" data-translate-key="joinCommunityDesc">Join our official community channel and get rewarded instantly!</div>
-        <button id="joinBtn" class="task-btn">
-            <i data-lucide="external-link"></i>
-            <span data-translate-key="joinBtnText">Join Channel</span>
-        </button>
     </div>
   </div>
   
   <div id="walletPage" class="page">
-    <div class="glass-card balance-widget">
-      <div class="balance-label" data-translate-key="yourBalance">Your Balance</div>
-      <div class="balance-amount-wrap">
-          <div class="balance-amount" id="balance2">0.000</div>
-          <div class="balance-currency">AZX</div>
+    <div class="balance-card">
+      <h3 data-translate-key="yourBalance">Your Balance</h3>
+      <div class="amount-wrap">
+          <div class="amount"><span id="balance2">0.000</span></div>
+          <div class="currency">TON</div>
       </div>
     </div>
     
-    <div id="methodsContainer" class="glass-card">
-        <h2 style="font-weight: 800; font-size: 18px; margin-bottom: 20px; text-align: center;" data-translate-key="withdrawTitle">Withdrawal Method</h2>
+    <div id="methodsContainer">
+        <h2 style="text-align:center; margin-bottom:10px; color:var(--text-dark); font-weight:900; font-size:24px;" data-translate-key="withdrawTitle">Withdrawal</h2>
+        <p style="text-align:center; color:var(--text-muted); font-size: 15px; font-weight: 600; margin-bottom: 30px;" data-translate-key="selectMethod">Select withdrawal method</p>
         
-        <div class="withdraw-method" data-type="azx" id="selectAzxMethod">
-            <div class="w-icon"><i data-lucide="hexagon"></i></div>
-            <div class="w-name">AZX Network</div>
-            <div class="w-min" data-translate-key="minAzxLabel">Min: 3 AZX</div>
+        <div class="method-list" id="methods">
+          <div class="method" data-type="ton">
+              <img src="https://i.postimg.cc/CM6QcxtM/IMG-20260413-182028-903.jpg" alt="TON" class="method-logo" draggable="false">
+              <span class="method-text">TON Coin</span>
+              <span class="min-withdraw-label" data-translate-key="minTonLabel">Min: 3 TON</span>
+          </div>
         </div>
     </div>
 
-    <div id="form" class="glass-card" style="display: none;">
-      <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 20px; cursor: pointer; color: var(--text-muted); font-weight: 600;" id="backBtn">
-        <i data-lucide="arrow-left" style="width: 18px;"></i> <span data-translate-key="back">Back</span>
+    <div id="form">
+      <button id="backBtn" style="background:var(--input-bg); border:1px solid var(--card-border); color:var(--text-dark); font-weight:800; font-size:15px; border-radius: 12px; padding: 14px 24px; width: max-content; margin: 0 0 30px 0; box-shadow: none;">
+        <i data-lucide="arrow-left" style="width:20px;height:20px;"></i>
+        <span data-translate-key="back">Back</span>
+      </button>
+      
+      <h3 style="margin-bottom: 20px; font-weight: 900; color: var(--text-dark); font-size: 20px;" data-translate-key="withdrawTonTitle">Withdraw TON</h3>
+      
+      <input id="details" placeholder="Your TON Wallet Address" type="text">
+      <input id="amount" type="number" step="0.1" placeholder="Amount (Min 3 TON)">
+      
+      <div id="feeCalcBox" class="fee-calc-box">
+          <span style="color:var(--text-muted); font-weight:600;" data-translate-key="feeText">Network Fee (5%):</span> <span id="feeAmount">0.00</span> TON<br>
+          <span style="color:var(--text-muted); font-weight:600; display:inline-block; margin-top:5px;" data-translate-key="receiveText">You will receive:</span> <span id="receiveAmount" style="color:var(--primary-green);">0.00</span> TON
       </div>
-      
-      <input id="details" class="input-field" placeholder="Your AZX Wallet Address" type="text">
-      <input id="amount" class="input-field" type="number" step="0.1" placeholder="Amount (Min 3 AZX)">
-      
-      <button id="withdrawBtn" class="primary-btn" style="margin-top: 10px;">
-        <i data-lucide="arrow-up-right"></i>
+
+      <button id="withdrawBtn">
+        <i data-lucide="arrow-up-circle"></i>
         <span data-translate-key="withdraw">Withdraw</span>
       </button>
-      <div id="alert" style="margin-top: 15px; text-align: center; font-weight: 700; font-size: 14px; display: none;"></div>
+      <div id="alert" class="alert"></div>
+    </div>
+
+    <div class="history-card" id="historyCard">
+        <h3 class="history-title" data-translate-key="withdrawHistory">Withdrawal History</h3>
+        <div class="history-list" id="historyList"></div>
     </div>
   </div>
 
   <div id="profilePage" class="page">
-    <div class="glass-card">
-        <div class="user-info">
-            <div class="avatar" id="avatarBox">A</div>
-            <div class="user-details">
-                <h2 id="displayUsername" data-translate-key="guestUser">User</h2>
-                <span>ID: <span id="displayUserId"></span></span>
+    <div class="profile-card" id="profileMainView">
+        <div class="profile-header">
+            <div class="profile-avatar">
+                <i data-lucide="user" class="default-icon"></i>
+                <img id="profileImage" src="" alt="Profile" draggable="false">
+            </div>
+            <div class="profile-name" id="displayUsername" data-translate-key="guestUser">User</div>
+            <div class="profile-id">ID: <span id="displayUserId" style="font-weight: 800;"></span></div>
+        </div>
+
+        <div class="settings-list">
+            <div class="setting-item">
+                <div class="setting-info">
+                    <span class="setting-icon"><i data-lucide="moon"></i></span>
+                    <span data-translate-key="theme">Theme</span>
+                </div>
+                <div class="toggle-switch" onclick="toggleTheme()">
+                    <div class="toggle-thumb" id="themeThumb"><i data-lucide="moon"></i></div>
+                </div>
+            </div>
+            
+            <div class="setting-item">
+                <div class="setting-info">
+                    <span class="setting-icon"><i data-lucide="globe"></i></span>
+                    <span data-translate-key="language">Language</span>
+                </div>
+                <select class="lang-select" id="langSelect" onchange="setLang(this.value)">
+                    <option value="en">EN</option>
+                    <option value="tr">TR</option>
+                    <option value="ru">RU</option>
+                </select>
             </div>
         </div>
 
-        <div class="setting-row">
-            <div class="s-label"><i data-lucide="moon" style="color: var(--color-blue);"></i> <span data-translate-key="theme">Dark Mode</span></div>
-            <div class="toggle" onclick="toggleTheme()"><div class="t-thumb"></div></div>
-        </div>
-        
-        <div class="setting-row">
-            <div class="s-label"><i data-lucide="globe" style="color: var(--color-green);"></i> <span data-translate-key="language">Language</span></div>
-            <select class="input-field" id="langSelect" onchange="setLang(this.value)">
-                <option value="en">EN</option>
-                <option value="tr">TR</option>
-                <option value="ru">RU</option>
-            </select>
-        </div>
-        
-        <button class="primary-btn" onclick="openShareModal()" style="margin-top: 20px; background: var(--color-green); box-shadow: 0 8px 20px rgba(16, 185, 129, 0.3);">
-            <i data-lucide="user-plus"></i> <span data-translate-key="shareBtn">Invite Friends</span>
+        <button class="profile-btn btn-share" onclick="openShareModal()">
+            <i data-lucide="share-2"></i> <span data-translate-key="shareBtn">Invite Friends</span>
         </button>
     </div>
   </div>
 </div>
 
-<div class="dock">
-  <button onclick="showPage('adsPage',this)" class="dock-btn active">
-    <i data-lucide="layout-grid"></i><span data-translate-key="home">Home</span>
+<div class="menu">
+  <button onclick="showPage('adsPage',this)" class="active" data-page-id="adsPage">
+    <i data-lucide="house" class="nav-icon"></i>
+    <span class="nav-text" data-translate-key="home">Home</span>
   </button>
-  <button onclick="showPage('tasksPage',this)" class="dock-btn">
-    <i data-lucide="check-square"></i><span data-translate-key="tasks">Tasks</span>
+  <button onclick="showPage('tasksPage',this)" data-page-id="tasksPage">
+    <i data-lucide="layout-list" class="nav-icon"></i>
+    <span class="nav-text" data-translate-key="tasks">Tasks</span>
   </button>
-  <button onclick="showPage('walletPage',this)" class="dock-btn">
-    <i data-lucide="wallet"></i><span data-translate-key="wallet">Wallet</span>
+  <button onclick="showPage('walletPage',this)" data-page-id="walletPage">
+    <i data-lucide="wallet" class="nav-icon"></i>
+    <span class="nav-text" data-translate-key="wallet">Wallet</span>
   </button>
-  <button onclick="showPage('profilePage',this)" class="dock-btn">
-    <i data-lucide="user"></i><span data-translate-key="profile">Profile</span>
+  <button onclick="showPage('profilePage',this)" data-page-id="profilePage">
+    <i data-lucide="user" class="nav-icon"></i>
+    <span class="nav-text" data-translate-key="profile">Profile</span>
   </button>
 </div>
 
-<div class="modal-overlay" id="shareModal">
-    <div class="modal-box">
-        <h3 style="margin-bottom: 20px; font-weight: 800;" data-translate-key="shareTitle">Invite Friends</h3>
-        <button class="share-opt tg" onclick="shareTelegram()"><i data-lucide="send"></i> Telegram</button>
-        <button class="share-opt wa" onclick="shareWhatsapp()"><i data-lucide="message-circle"></i> WhatsApp</button>
-        <button class="share-opt cp" onclick="copyLink()"><i data-lucide="copy"></i> <span data-translate-key="copyLink">Copy Link</span></button>
-        <div style="margin-top: 15px; cursor: pointer; color: var(--text-muted); font-weight: 700;" onclick="closeShareModal()" data-translate-key="close">Close</div>
+<div class="modal-overlay" id="shareModalOverlay">
+    <div class="share-modal">
+        <div class="share-modal-title" data-translate-key="shareTitle">Invite Friends</div>
+        
+        <button class="share-btn-action tg" onclick="shareOnTelegramAction()">
+            <i data-lucide="send" style="width:20px; height:20px;"></i> <span data-translate-key="shareTelegram">Share on Telegram</span>
+        </button>
+        
+        <button class="share-btn-action wa" onclick="shareOnWhatsappAction()">
+            <i data-lucide="message-circle" style="width:20px; height:20px;"></i> <span data-translate-key="shareWhatsapp">Share on WhatsApp</span>
+        </button>
+        
+        <button class="share-btn-action copy" onclick="copyRefLinkAction()">
+            <i data-lucide="copy" style="width:20px; height:20px;"></i> <span data-translate-key="copyLink">Copy Link</span>
+        </button>
+        
+        <button class="share-btn-action close-modal" onclick="closeShareModal()">
+            <span data-translate-key="close">Close</span>
+        </button>
     </div>
 </div>
 
 <script>
 lucide.createIcons();
 
+// Adsgram Quraşdırılması
 let adManager = null;
 if (window.Adsgram) {
     adManager = window.Adsgram.init({ blockId: "int-28280" });
 }
 
+function safeRemove(k) { try { localStorage.removeItem(k); } catch(e) {} }
+
 const body = document.getElementById('body');
+const themeThumb = document.getElementById('themeThumb');
 
 function applyTheme(isDark) {
     if (isDark) {
-        body.classList.add('dark-theme'); safeSet(THEME_KEY, 'dark');
-        try { if(window.Telegram?.WebApp?.setHeaderColor) window.Telegram.WebApp.setHeaderColor('#020617'); } catch(e){}
+        body.classList.add('dark-theme');
+        if(themeThumb) themeThumb.innerHTML = '<i data-lucide="moon" style="width:14px;height:14px;"></i>'; 
+        safeSet(THEME_KEY, 'dark');
+        try {
+            if(window.Telegram?.WebApp?.setHeaderColor) window.Telegram.WebApp.setHeaderColor('#0B0E14');
+            if(window.Telegram?.WebApp?.setBackgroundColor) window.Telegram.WebApp.setBackgroundColor('#0B0E14');
+        } catch(e){}
     } else {
-        body.classList.remove('dark-theme'); safeSet(THEME_KEY, 'light');
-        try { if(window.Telegram?.WebApp?.setHeaderColor) window.Telegram.WebApp.setHeaderColor('#f8fafc'); } catch(e){}
+        body.classList.remove('dark-theme');
+        if(themeThumb) themeThumb.innerHTML = '<i data-lucide="sun" style="width:14px;height:14px;"></i>'; 
+        safeSet(THEME_KEY, 'light');
+        try {
+            if(window.Telegram?.WebApp?.setHeaderColor) window.Telegram.WebApp.setHeaderColor('#F8F9FA');
+            if(window.Telegram?.WebApp?.setBackgroundColor) window.Telegram.WebApp.setBackgroundColor('#F8F9FA');
+        } catch(e){}
     }
+    lucide.createIcons(); 
 }
 function toggleTheme() {
-    applyTheme(!body.classList.contains('dark-theme'));
+    const isDark = body.classList.contains('dark-theme');
+    applyTheme(!isDark);
 }
 
 applyTheme(safeGet(THEME_KEY, 'dark') === 'dark');
 
-const USERNAME_KEY = `user_profile_name_azx_${userRefId}`;
+const USERNAME_KEY = `user_profile_name_${userRefId}`;
+const PROFILE_PIC_KEY = `user_profile_pic_${userRefId}`;
 
 if (tgUser) {
     let fullName = tgUser.first_name;
     if (tgUser.last_name) { fullName += " " + tgUser.last_name; }
     localStorage.setItem(USERNAME_KEY, fullName);
+    if (tgUser.photo_url) { localStorage.setItem(PROFILE_PIC_KEY, tgUser.photo_url); }
 }
 
+// YENİ BOT REFERAL LİNKİ
 const userRefLink = `https://t.me/azxcryptobot?startapp=${userRefId}`;
 
-// Use separate storage keys for AZX logic to avoid conflicts
-const BAL_KEY = `bal_azx_${userRefId}`;
-const COUNT_KEY = `cnt_azx_${userRefId}`;
-const RESET_KEY = `resetTime_azx_${userRefId}`;
-const JOIN_COMMUNITY_KEY = `joined_azx_community_${userRefId}`;
+const BAL_KEY = `bal_ton_${userRefId}`;
+const COUNT_KEY = `cnt_ton_${userRefId}`;
+const RESET_KEY = `resetTime_ton_${userRefId}`;
+const JOIN_COMMUNITY_KEY = `joined_ton_community_${userRefId}`;
+const REWARD_MSG_KEY = `rewardMsgExpire_ton_${userRefId}`;
+const HISTORY_KEY = `withdraw_history_ton_${userRefId}`;
 
 const REWARD_PER_AD = 0.002;
 const MAX_ADS_PER_DAY = 50;
 const TASK_REWARD = 0.10;
 const MIN_WITHDRAW = 3;
+const FEE_PERCENT = 0.05;
+
+let withdrawHistory = safeGet(HISTORY_KEY, []);
 
 let currentLang = localStorage.getItem(LANG_KEY);
-if (!['en', 'tr', 'ru'].includes(currentLang)) { currentLang = 'en'; localStorage.setItem(LANG_KEY, currentLang); }
+if (!currentLang || !['en', 'tr', 'ru'].includes(currentLang)) {
+    currentLang = 'en';
+    localStorage.setItem(LANG_KEY, currentLang);
+}
 document.getElementById('langSelect').value = currentLang;
 
+// YENİ TƏRCÜMƏLƏR VƏ MƏTNLƏR
 const TRANSLATIONS = {
     'en': {
-        yourBalance: 'Your Balance', dailyAdsHeader: 'Watch & Earn',
-        adReward: 'Earn <b>0.002 AZX</b> per ad',
+        yourBalance: 'Your Balance', dailyAdsHeader: 'Daily Ads',
+        adReward: 'Earn <b>0.002 TON</b> for each ad',
         watched: 'Watched', maximum: 'Maximum', maxCount: '50', progressText: 'Progress:',
-        watchAd: 'Watch Ad', watching: 'Watching...', adLimitReached: 'Daily limit reached!',
-        wait: 'Wait {s}s',
-        joinCommunityTitle: 'Join AZX', joinCommunityDesc: 'Join our official community channel and get rewarded instantly!',
+        watchAd: 'Watch Ad', watching: '⏳ Watching...', adLimitReached: '📣 Daily limit reached!',
+        rewardAddedConfirmed: (r) => `✅ ${r} added!`, wait: '⏳ Wait {s}s',
+        joinCommunityTitle: 'Join Community', joinCommunityDesc: 'Join our official AZX Crypto channel and earn!',
         joinBtnText: 'Join Channel', completed: 'Completed',
-        withdrawTitle: 'Withdrawal Method', minAzxLabel: 'Min: 3 AZX',
-        back: 'Back', withdraw: 'Withdraw',
-        detailsError: 'Enter valid AZX address', amountError: 'Enter correct amount',
-        minAmount: 'Minimum withdrawal is 3 AZX', balanceError: 'Insufficient balance',
+        withdrawTitle: 'Withdrawal', selectMethod: 'Select withdrawal method', minTonLabel: 'Min: 3 TON',
+        back: 'Back', withdrawTonTitle: 'Withdraw TON', withdraw: 'Withdraw', feeText: 'Network Fee (5%):', receiveText: 'You will receive:',
+        methodError: 'Select a method', detailsError: 'Enter valid TON address', amountError: 'Enter correct amount',
+        minAmount: 'Minimum withdrawal is 3 TON', balanceError: 'Insufficient balance',
+        withdrawSuccess: '✅ Withdrawal requested! It will be processed soon.',
         home: 'Home', tasks: 'Tasks', wallet: 'Wallet', profile: 'Profile',
-        placeholderDetails_azx: 'Your AZX Wallet Address', placeholderAmount: 'Amount (Min 3 AZX)',
-        guestUser: 'User', theme: 'Dark Mode', language: 'Language',
-        shareBtn: 'Invite Friends', shareTitle: 'Invite Friends', copyLink: 'Copy Link', linkCopied: 'Link copied!', close: 'Close',
-        shareMsg: "🚀 Earn with AZX Crypto: simple, fast, real rewards!\n\nWatch daily ads and start earning 💰 AZX coins effortlessly.\n\n✨ Easy & user-friendly\n💎 Real rewards\n\n👇 Join now and start earning!\n\n🔗 Link: {LINK}"
+        placeholderDetails_ton: 'Your TON Wallet Address', placeholderAmount: 'Amount (Min 3 TON)',
+        taskSuccess: (r) => `✅ Task Completed! ${r} added.`,
+        guestUser: 'User', theme: 'Theme', language: 'Language',
+        withdrawHistory: 'Withdrawal History', pending: 'Pending', emptyHistory: 'History is empty',
+        shareBtn: 'Invite Friends', shareTitle: 'Invite Friends', shareTelegram: 'Share on Telegram', shareWhatsapp: 'Share on WhatsApp', copyLink: 'Copy Link', linkCopied: '✅ Link copied!', close: 'Close',
+        shareMsg: "🚀 Earn with AZX Crypto simple, fast, real rewards!\n\nWatch daily ads and start earning 💰\nTON coins effortlessly. No complex steps just watch, complete, and grow your balance!\n\n✨ Easy & user-friendly system\n🎯 Daily earning opportunities\n💎 Real rewards, real results\n\nTurn your free time into profit 🔥 👇 Join now and start earning!\n\n🔗 Link: {LINK}"
     },
     'tr': {
-        yourBalance: 'Bakiyeniz', dailyAdsHeader: 'İzle & Kazan',
-        adReward: 'Her reklam için <b>0.002 AZX</b> kazanın',
+        yourBalance: 'Bakiyeniz', dailyAdsHeader: 'Günlük Reklamlar',
+        adReward: 'Her reklam için <b>0.002 TON</b> kazanın',
         watched: 'İzlenen', maximum: 'Maksimum', maxCount: '50', progressText: 'İlerleme:',
-        watchAd: 'Reklam İzle', watching: 'İzleniyor...', adLimitReached: 'Günlük sınıra ulaştınız!',
-        wait: '{s}sn bekleyin',
-        joinCommunityTitle: 'AZX Topluluğu', joinCommunityDesc: 'Resmi kanalımıza katılın ve anında ödül kazanın!',
+        watchAd: 'Reklam İzle', watching: '⏳ İzleniyor...', adLimitReached: '📣 Günlük sınıra ulaştınız!',
+        rewardAddedConfirmed: (r) => `✅ ${r} eklendi!`, wait: '⏳ {s}sn bekleyin',
+        joinCommunityTitle: 'Topluluğa Katıl', joinCommunityDesc: 'Resmi AZX Crypto kanalımıza katılın ve kazanın!',
         joinBtnText: 'Kanala Katıl', completed: 'Tamamlandı',
-        withdrawTitle: 'Çekim Yöntemi', minAzxLabel: 'Min: 3 AZX',
-        back: 'Geri', withdraw: 'Çekim Yap',
-        detailsError: 'Geçerli AZX adresi girin', amountError: 'Miktarı doğru girin',
-        minAmount: 'Minimum çekim 3 AZX', balanceError: 'Yetersiz bakiye',
+        withdrawTitle: 'Para Çekme', selectMethod: 'Çekim yöntemi seçin', minTonLabel: 'Min: 3 TON',
+        back: 'Geri', withdrawTonTitle: 'TON Çek', withdraw: 'Çekim Yap', feeText: 'Ağ Ücreti (5%):', receiveText: 'Alacağınız:',
+        methodError: 'Yöntem seçin', detailsError: 'Geçerli TON adresi girin', amountError: 'Miktarı doğru girin',
+        minAmount: 'Minimum çekim 3 TON', balanceError: 'Yetersiz bakiye',
+        withdrawSuccess: '✅ Çekim talebi alındı! Yakında işlenecektir.',
         home: 'Ana Sayfa', tasks: 'Görevler', wallet: 'Cüzdan', profile: 'Profil',
-        placeholderDetails_azx: 'AZX Cüzdan Adresiniz', placeholderAmount: 'Miktar (Min 3 AZX)',
-        guestUser: 'Kullanıcı', theme: 'Karanlık Mod', language: 'Dil',
-        shareBtn: 'Davet Et', shareTitle: 'Arkadaşlarını Davet Et', copyLink: 'Kopyala', linkCopied: 'Kopyalandı!', close: 'Kapat',
-        shareMsg: "🚀 AZX Crypto ile gerçek ödüller kazanın!\n\nGünlük reklamları izleyin ve zahmetsizce 💰 AZX coin kazanın.\n\n✨ Kolay ve kullanıcı dostu\n💎 Gerçek ödüller\n\n👇 Şimdi katılın!\n\n🔗 Link: {LINK}"
+        placeholderDetails_ton: 'TON Cüzdan Adresiniz', placeholderAmount: 'Miktar (Min 3 TON)',
+        taskSuccess: (r) => `✅ Görev Tamamlandı! ${r} eklendi.`,
+        guestUser: 'Kullanıcı', theme: 'Tema', language: 'Dil',
+        withdrawHistory: 'Çekim Geçmişi', pending: 'Beklemede', emptyHistory: 'Geçmiş boş',
+        shareBtn: 'Arkadaşlarını Davet Et', shareTitle: 'Arkadaşlarını Davet Et', shareTelegram: 'Telegram ile paylaş', shareWhatsapp: 'WhatsApp ile paylaş', copyLink: 'Bağlantıyı Kopyala', linkCopied: '✅ Bağlantı kopyalandı!', close: 'Kapat',
+        shareMsg: "🚀 AZX Crypto ile basit, hızlı, gerçek ödüller kazanın!\n\nGünlük reklamları izleyin ve zahmetsizce 💰 TON coin kazanmaya başlayın. Karmaşık adımlar yok, sadece izleyin, tamamlayın ve bakiyenizi büyütün!\n\n✨ Kolay ve kullanıcı dostu sistem\n🎯 Günlük kazanma fırsatları\n💎 Gerçek ödüller, gerçek sonuçlar\n\nBoş zamanınızı kazanca dönüştürün 🔥 👇 Şimdi katılın ve kazanmaya başlayın!\n\n🔗 Link: {LINK}"
     },
     'ru': { 
-        yourBalance: 'Ваш Баланс', dailyAdsHeader: 'Смотри и Зарабатывай',
-        adReward: '<b>0.002 AZX</b> за рекламу',
-        watched: 'Просмотры', maximum: 'Максимум', maxCount: '50', progressText: 'Прогресс:',
-        watchAd: 'Смотреть', watching: 'Просмотр...', adLimitReached: 'Достигнут лимит!',
-        wait: 'Ожидайте {s}с',
-        joinCommunityTitle: 'Сообщество AZX', joinCommunityDesc: 'Вступайте в официальный канал и получайте награды!',
+        yourBalance: 'Ваш Баланс', dailyAdsHeader: 'Ежедневная Реклама',
+        adReward: 'Зарабатывайте <b>0.002 TON</b> за рекламу',
+        watched: 'Просмотрено', maximum: 'Максимум', maxCount: '50', progressText: 'Прогресс:',
+        watchAd: 'Смотреть Рекламу', watching: '⏳ Просмотр...', adLimitReached: '📣 Достигнут лимит!',
+        rewardAddedConfirmed: (r) => `✅ ${r} добавлено!`, wait: '⏳ Ожидайте {s}с',
+        joinCommunityTitle: 'Присоединиться к сообществу', joinCommunityDesc: 'Вступайте в наш официальный канал AZX Crypto и зарабатывайте!',
         joinBtnText: 'Подписаться', completed: 'Выполнено',
-        withdrawTitle: 'Способ Вывода', minAzxLabel: 'Мин: 3 AZX',
-        back: 'Назад', withdraw: 'Вывести',
-        detailsError: 'Введите верный AZX адрес', amountError: 'Введите правильную сумму',
-        minAmount: 'Минимум 3 AZX', balanceError: 'Недостаточно средств',
+        withdrawTitle: 'Вывод Средств', selectMethod: 'Выберите способ вывода', minTonLabel: 'Мин: 3 TON',
+        back: 'Назад', withdrawTonTitle: 'Вывести TON', withdraw: 'Вывести', feeText: 'Комиссия сети (5%):', receiveText: 'Вы получите:',
+        methodError: 'Выберите способ', detailsError: 'Введите верный TON адрес', amountError: 'Введите правильную сумму',
+        minAmount: 'Минимальный вывод 3 TON', balanceError: 'Недостаточно средств',
+        withdrawSuccess: '✅ Заявка отправлена! Будет обработана скоро.',
         home: 'Главная', tasks: 'Задания', wallet: 'Кошелек', profile: 'Профиль',
-        placeholderDetails_azx: 'Ваш AZX Адрес', placeholderAmount: 'Сумма (Мин 3 AZX)',
-        guestUser: 'Пользователь', theme: 'Темная тема', language: 'Язык',
-        shareBtn: 'Пригласить', shareTitle: 'Пригласить Друзей', copyLink: 'Копировать', linkCopied: 'Скопировано!', close: 'Закрыть',
-        shareMsg: "🚀 Зарабатывайте с AZX Crypto!\n\nСмотрите рекламу и легко зарабатывайте 💰 AZX.\n\n✨ Удобная система\n💎 Реальные награды\n\n👇 Присоединяйтесь!\n\n🔗 Ссылка: {LINK}"
+        placeholderDetails_ton: 'Ваш TON Адрес', placeholderAmount: 'Сумма (Мин 3 TON)',
+        taskSuccess: (r) => `✅ Задание выполнено! ${r} добавлено.`,
+        guestUser: 'Пользователь', theme: 'Тема', language: 'Язык',
+        withdrawHistory: 'История Выводов', pending: 'В ожидании', emptyHistory: 'История пуста',
+        shareBtn: 'Пригласить Друзей', shareTitle: 'Пригласить Друзей', shareTelegram: 'Поделиться в Telegram', shareWhatsapp: 'Поделиться в WhatsApp', copyLink: 'Скопировать ссылку', linkCopied: '✅ Ссылка скопирована!', close: 'Закрыть',
+        shareMsg: "🚀 Зарабатывайте с AZX Crypto: просто, быстро, реальные награды!\n\nСмотрите ежедневную рекламу и начните легко зарабатывать 💰 TON. Никаких сложных шагов — просто смотрите, выполняйте и увеличивайте свой баланс!\n\n✨ Удобная система\n🎯 Ежедневные возможности\n💎 Реальные награды\n\nПревратите свободное время в прибыль 🔥 👇 Присоединяйтесь и начните зарабатывать!\n\n🔗 Ссылка: {LINK}"
     }
 };
 
 let bal = parseFloat(safeGet(BAL_KEY, 0.00)); 
 let cnt = parseInt(safeGet(COUNT_KEY, 0));
 let resetTime = safeGet(RESET_KEY, null);
+
+let rewardMsgTimeout = null; 
 let isAdRunning = false; 
 
 function getNextResetTime() {
     const now = new Date();
     let resetUTC = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(), 0, 0, 0, 0));
-    if(now.getTime() >= resetUTC.getTime()){ resetUTC.setUTCDate(resetUTC.getUTCDate() + 1); }
+    if(now.getTime() >= resetUTC.getTime()){
+        resetUTC.setUTCDate(resetUTC.getUTCDate() + 1); 
+    }
     return resetUTC.getTime();
 }
 
 if(!resetTime || Date.now() >= resetTime){
   cnt=0; resetTime=getNextResetTime(); safeSet(RESET_KEY,resetTime); safeSet(COUNT_KEY,cnt);
+}
+
+function loadProfilePic() {
+    const pic = localStorage.getItem(PROFILE_PIC_KEY);
+    const avatar = document.querySelector('.profile-avatar');
+    const img = document.getElementById('profileImage');
+    if (pic) {
+        img.src = pic;
+        avatar.classList.add('has-image');
+    } else {
+        avatar.classList.remove('has-image');
+    }
 }
 
 function loadProfile() {
@@ -531,179 +703,425 @@ function loadProfile() {
     if (savedName) {
         displayEl.textContent = savedName;
         displayEl.removeAttribute('data-translate-key');
-        document.getElementById('avatarBox').textContent = savedName.charAt(0).toUpperCase();
     } else {
         displayEl.setAttribute('data-translate-key', 'guestUser');
         applyTranslationToElement(displayEl, 'guestUser', currentLang);
     }
     document.getElementById('displayUserId').textContent = userRefId;
+    loadProfilePic();
 }
 
-function openShareModal() { document.getElementById('shareModal').classList.add('show'); document.getElementById('shareModal').style.display='flex'; }
-function closeShareModal() { document.getElementById('shareModal').classList.remove('show'); setTimeout(()=>document.getElementById('shareModal').style.display='none', 300); }
+function openShareModal() {
+    const overlay = document.getElementById('shareModalOverlay');
+    overlay.style.display = 'flex';
+    setTimeout(() => overlay.classList.add('show'), 10);
+}
 
-function shareTelegram() {
-    const msg = encodeURIComponent(TRANSLATIONS[currentLang].shareMsg.replace('{LINK}', userRefLink));
-    window.open(`https://t.me/share/url?url=&text=${msg}`, '_blank'); closeShareModal();
+function closeShareModal() {
+    const overlay = document.getElementById('shareModalOverlay');
+    overlay.classList.remove('show');
+    setTimeout(() => overlay.style.display = 'none', 300);
 }
-function shareWhatsapp() {
-    const msg = encodeURIComponent(TRANSLATIONS[currentLang].shareMsg.replace('{LINK}', userRefLink));
-    window.open(`https://wa.me/?text=${msg}`, '_blank'); closeShareModal();
-}
-function copyLink() {
+
+function shareOnTelegramAction() {
     const t = TRANSLATIONS[currentLang];
-    navigator.clipboard.writeText(userRefLink).then(() => { showToast(t.linkCopied); closeShareModal(); }).catch(()=>{});
+    const message = t.shareMsg.replace('{LINK}', userRefLink);
+    const encodedMessage = encodeURIComponent(message);
+    window.open(`https://t.me/share/url?url=&text=${encodedMessage}`, '_blank');
+    closeShareModal();
 }
 
-function formatAzx(val) { return parseFloat(val).toFixed(3); }
+function shareOnWhatsappAction() {
+    const t = TRANSLATIONS[currentLang];
+    const message = t.shareMsg.replace('{LINK}', userRefLink);
+    const encodedMessage = encodeURIComponent(message);
+    window.open(`https://wa.me/?text=${encodedMessage}`, '_blank');
+    closeShareModal();
+}
+
+function copyRefLinkAction() {
+    const t = TRANSLATIONS[currentLang];
+    if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(userRefLink).then(() => {
+            showTaskNotification(t.linkCopied);
+        }).catch(err => fallbackCopyTextToClipboard(userRefLink, t));
+    } else {
+        fallbackCopyTextToClipboard(userRefLink, t);
+    }
+    closeShareModal();
+}
+
+function fallbackCopyTextToClipboard(text, t) {
+    var textArea = document.createElement("textarea");
+    textArea.value = text;
+    textArea.style.top = "0"; textArea.style.left = "0"; textArea.style.position = "fixed"; textArea.style.opacity = "0";
+    document.body.appendChild(textArea);
+    textArea.focus(); textArea.select();
+    try {
+        var successful = document.execCommand('copy');
+        if(successful) showTaskNotification(t.linkCopied);
+    } catch (err) {}
+    document.body.removeChild(textArea);
+}
+
+function formatTon(val) { return parseFloat(val).toFixed(3); }
 
 function update(){
-  if(Date.now() >= resetTime){ cnt = 0; resetTime = getNextResetTime(); safeSet(RESET_KEY, resetTime); }
-  const formattedBal = formatAzx(bal);
+  if(Date.now() >= resetTime){
+      cnt = 0; resetTime = getNextResetTime(); safeSet(RESET_KEY, resetTime);
+  }
+
+  const formattedBal = formatTon(bal);
   document.getElementById('balance').textContent = formattedBal;
   document.getElementById('balance2').textContent = formattedBal;
   document.getElementById('balance3').textContent = formattedBal;
-  document.getElementById('adsCount').textContent=cnt;
-  document.getElementById('progress').style.width=(cnt/MAX_ADS_PER_DAY*100)+'%';
-  document.getElementById('progressTextSpan').textContent = `${cnt}/${MAX_ADS_PER_DAY}`;
+
+  document.getElementById('adsCount').textContent = cnt;
+  document.getElementById('progress').style.width = (cnt / MAX_ADS_PER_DAY * 100) + '%';
+  const progressTextSpan = document.getElementById('progressTextSpan');
+  if(progressTextSpan) progressTextSpan.textContent = `${cnt}/${MAX_ADS_PER_DAY}`;
+  
   safeSet(BAL_KEY, bal); safeSet(COUNT_KEY, cnt); 
-  updateTaskState();
+  
+  checkAndDisplayRewardMsg();
+  updateTaskButtons(); 
 }
 
-function updateTaskState() {
-    const joinBtn = document.getElementById('joinBtn');
+function renderHistory() {
+    const list = document.getElementById('historyList');
     const t = TRANSLATIONS[currentLang];
-    if (localStorage.getItem(JOIN_COMMUNITY_KEY)){
-        joinBtn.className = 'task-btn completed'; joinBtn.innerHTML = `<i data-lucide="check-circle-2"></i> ${t.completed}`; joinBtn.disabled = true; 
-    } else if (!joinBtn.classList.contains('waiting')) {
-        joinBtn.className = 'task-btn'; joinBtn.disabled = false; joinBtn.innerHTML = `<i data-lucide="external-link"></i> ${t.joinBtnText}`;
+    list.innerHTML = '';
+    
+    if (withdrawHistory.length === 0) {
+        list.innerHTML = `<div class="history-empty">${t.emptyHistory}</div>`;
+        return;
+    }
+    
+    const reversed = [...withdrawHistory].reverse();
+    reversed.forEach(item => {
+        const div = document.createElement('div');
+        div.className = 'history-item';
+        
+        const d = new Date(item.date);
+        const dateStr = d.toLocaleDateString() + ' ' + d.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+        const statusText = t[item.status] || item.status;
+        
+        div.innerHTML = `
+            <div class="history-info">
+                <div class="history-method"><img src="https://i.postimg.cc/CM6QcxtM/IMG-20260413-182028-903.jpg" alt="TON" draggable="false"> TON Coin</div>
+                <div class="history-date">${dateStr}</div>
+            </div>
+            <div class="history-status-wrap">
+                <div class="history-amount">${formatTon(item.amount)} TON</div>
+                <div class="history-status">${statusText}</div>
+            </div>
+        `;
+        list.appendChild(div);
+    });
+}
+
+function updateTaskButtons() {
+    const t = TRANSLATIONS[currentLang];
+    const joinBtn = document.getElementById('joinBtn');
+
+    if (joinBtn) {
+        if (localStorage.getItem(JOIN_COMMUNITY_KEY)){
+            joinBtn.className = 'task-btn completed'; joinBtn.innerHTML = `<i data-lucide="check-circle" style="width:20px;height:20px;"></i> ${t.completed}`; joinBtn.disabled = true; 
+        } else {
+            if (!joinBtn.classList.contains('waiting')) {
+                 joinBtn.className = 'task-btn action'; joinBtn.disabled = false; joinBtn.innerHTML = `<i data-lucide="send" style="width:20px;height:20px;"></i> ${t.joinBtnText}`;
+            }
+        }
     }
     lucide.createIcons(); 
 }
 
 function applyTranslationToElement(el, key, lang) {
     const t = TRANSLATIONS[lang];
-    if (!t || !t[key]) return;
-    if(el.tagName === 'INPUT') el.placeholder = t[key]; else el.innerHTML = t[key];
+    if (!t) return;
+    if (typeof t[key] === 'function') {} else if (t[key]) {
+         if(el.tagName === 'INPUT') el.placeholder = t[key];
+         else el.innerHTML = t[key];
+    }
 }
 
 function applyTranslations(lang) {
     const t = TRANSLATIONS[lang];
-    document.querySelectorAll('[data-translate-key]').forEach(el => applyTranslationToElement(el, el.getAttribute('data-translate-key'), lang));
-    updateTaskState(); loadProfile();
-    document.getElementById('progressTextSpan').textContent = `${cnt}/${MAX_ADS_PER_DAY}`;
-    restoreAdBtnState();
+    if (!t) return;
+    document.querySelectorAll('[data-translate-key]').forEach(el => {
+        applyTranslationToElement(el, el.getAttribute('data-translate-key'), lang);
+    });
+    
+    updateTaskButtons(); 
+    loadProfile();
+    renderHistory();
+    
+    const progressTextSpan = document.getElementById('progressTextSpan');
+    if(progressTextSpan) progressTextSpan.textContent = `${cnt}/${MAX_ADS_PER_DAY}`;
+    
+    const adBtnWatchSpan = adBtnContent.querySelector('span');
+    if(adBtnWatchSpan) {
+        if (adBtn.classList.contains('waiting')) { adBtnWatchSpan.textContent = t.watching; } 
+        else { adBtnWatchSpan.textContent = t.watchAd; }
+    }
 }
 
 function setLang(lang) {
-    currentLang = lang; localStorage.setItem(LANG_KEY, lang); applyTranslations(lang);
+    currentLang = lang;
+    localStorage.setItem(LANG_KEY, lang);
+    applyTranslations(lang);
+    calculateFee(); 
 }
 
-function showToast(msg) {
-    const tb = document.getElementById('toastBox');
-    document.getElementById('toastMsg').innerHTML = msg;
-    tb.classList.add('show');
-    setTimeout(() => tb.classList.remove('show'), 3000);
+const adBtn=document.getElementById('adBtn'), msg=document.getElementById('msg');
+const adBtnContent = document.querySelector('.ad-btn-content');
+
+function displayRewardMsg(messageHTML) {
+    if (rewardMsgTimeout) { clearTimeout(rewardMsgTimeout); rewardMsgTimeout = null; }
+    const container = document.getElementById('adRewardNotificationContainer');
+    if (!container) return; 
+
+    let rewardMsgElement = document.getElementById('rewardMsg');
+    if (rewardMsgElement) { rewardMsgElement.innerHTML = messageHTML; } 
+    else {
+        rewardMsgElement = document.createElement('div');
+        rewardMsgElement.className = 'reward-msg'; rewardMsgElement.id = 'rewardMsg';
+        rewardMsgElement.innerHTML = messageHTML;
+        container.appendChild(rewardMsgElement);
+    }
+    rewardMsgElement.classList.remove('show');
+    safeSet(REWARD_MSG_KEY, { html: messageHTML, expire: Date.now() + 2500 }); 
+    setTimeout(() => { rewardMsgElement.classList.add('show'); }, 50);
+    rewardMsgTimeout = setTimeout(() => {
+        if (rewardMsgElement) {
+            rewardMsgElement.classList.remove('show');
+            setTimeout(() => { if(rewardMsgElement.parentNode === container) rewardMsgElement.remove(); }, 400); 
+        }
+        safeRemove(REWARD_MSG_KEY);
+        rewardMsgTimeout = null;
+    }, 2500);
 }
 
-const adBtn = document.getElementById('adBtn'), adMsg = document.getElementById('msg');
+function checkAndDisplayRewardMsg() {
+    const container = document.getElementById('adRewardNotificationContainer');
+    if (!container) return;
+    const currentPage = document.querySelector('.page.active');
+    if (!currentPage || currentPage.id !== 'adsPage') {
+        let rewardMsgElement = document.getElementById('rewardMsg');
+        if (rewardMsgElement) rewardMsgElement.classList.remove('show');
+        return;
+    }
+    const savedMsg = safeGet(REWARD_MSG_KEY, null);
+    let rewardMsgElement = document.getElementById('rewardMsg');
+    if (savedMsg) {
+        const remainingTime = savedMsg.expire - Date.now();
+        if (remainingTime > 0) {
+            if (!rewardMsgElement) {
+                rewardMsgElement = document.createElement('div');
+                rewardMsgElement.className = 'reward-msg'; rewardMsgElement.id = 'rewardMsg';
+                container.appendChild(rewardMsgElement);
+            }
+            rewardMsgElement.innerHTML = savedMsg.html; rewardMsgElement.classList.remove('show');
+            if (rewardMsgTimeout) clearTimeout(rewardMsgTimeout);
+            setTimeout(() => { rewardMsgElement.classList.add('show'); }, 50);
+            rewardMsgTimeout = setTimeout(() => {
+                 if (rewardMsgElement) {
+                    rewardMsgElement.classList.remove('show');
+                    setTimeout(() => { if(rewardMsgElement.parentNode === container) rewardMsgElement.remove(); }, 400);
+                }
+                safeRemove(REWARD_MSG_KEY); rewardMsgTimeout = null;
+            }, remainingTime);
+        } else { safeRemove(REWARD_MSG_KEY); if (rewardMsgElement && rewardMsgElement.parentNode === container) rewardMsgElement.remove(); }
+    } else { if (rewardMsgElement && rewardMsgElement.parentNode === container) rewardMsgElement.remove(); }
+}
 
 function restoreAdBtnState() {
     const t = TRANSLATIONS[currentLang];
-    const textSpan = document.getElementById('adBtnText');
-    if (isAdRunning) { adBtn.classList.add('waiting'); adBtn.disabled = true; if(textSpan) textSpan.textContent = t.watching; return; }
-    if (cnt >= MAX_ADS_PER_DAY) { adBtn.classList.remove('waiting'); adBtn.disabled = true; if(textSpan) textSpan.textContent = t.watchAd; adMsg.textContent = t.adLimitReached; return; }
-    adBtn.classList.remove('waiting'); adBtn.disabled = false; if(textSpan) textSpan.textContent = t.watchAd; adMsg.textContent = '';
+    const textSpan = adBtnContent.querySelector('span');
+    
+    if (isAdRunning) {
+        adBtn.classList.add('waiting'); adBtn.disabled = true;
+        if(textSpan) textSpan.textContent = t.watching; return; 
+    }
+
+    if (cnt >= MAX_ADS_PER_DAY) {
+        adBtn.classList.remove('waiting'); adBtn.disabled = true; 
+        if(textSpan) textSpan.textContent = t.watchAd;
+        msg.textContent = t.adLimitReached; checkAndDisplayRewardMsg(); return; 
+    }
+    
+    adBtn.classList.remove('waiting'); adBtn.disabled = false; 
+    if(textSpan) textSpan.textContent = t.watchAd;
+    msg.textContent = ''; checkAndDisplayRewardMsg();
 }
 
-adBtn.onclick = () => {
+adBtn.onclick = async () => {
     update();
     const t = TRANSLATIONS[currentLang];
-    if (cnt >= MAX_ADS_PER_DAY) { adMsg.textContent = t.adLimitReached; return; }
+    if (cnt >= MAX_ADS_PER_DAY) { msg.textContent = t.adLimitReached; return; }
     if (isAdRunning || adBtn.classList.contains('waiting')) return;
-    isAdRunning = true; adBtn.disabled = true; adBtn.classList.add('waiting');
-    document.getElementById('adBtnText').textContent = t.watching; adMsg.textContent = '';
+    isAdRunning = true; 
+
+    if (rewardMsgTimeout) { clearTimeout(rewardMsgTimeout); rewardMsgTimeout = null; }
+    safeRemove(REWARD_MSG_KEY);
+    let rewardMsgElement = document.getElementById('rewardMsg');
+    if (rewardMsgElement) {
+         rewardMsgElement.classList.remove('show');
+         setTimeout(() => { const container = document.getElementById('adRewardNotificationContainer'); if(container && rewardMsgElement.parentNode === container) rewardMsgElement.remove(); }, 400); 
+    }
+    
+    adBtn.disabled = true; adBtn.classList.add('waiting');
+    const textSpan = adBtnContent.querySelector('span');
+    if(textSpan) textSpan.textContent = t.watching; msg.textContent = '';
     
     try {
-        if (!adManager && window.Adsgram) adManager = window.Adsgram.init({ blockId: "int-28280" });
+        if (!adManager && window.Adsgram) { adManager = window.Adsgram.init({ blockId: "int-28280" }); }
         if (adManager) {
-            adManager.show().then(() => {
-                bal += REWARD_PER_AD; cnt++; update(); 
-                showToast(`+${REWARD_PER_AD} AZX!`); resetAdBtnState(t);
-            }).catch(() => resetAdBtnState(t));
-        } else resetAdBtnState(t);
-    } catch(e) { resetAdBtnState(t); } 
+            adManager.show().then((result) => { giveAdReward(t); }).catch((error) => { console.error("Adsgram ad error or skipped", error); resetAdBtnState(t); });
+        } else {
+            console.error("Adsgram could not be initialized"); resetAdBtnState(t);
+        }
+    } catch(e) {
+        console.error("Ad block or network error", e); resetAdBtnState(t);
+    } 
 };
+
+function giveAdReward(t) {
+    bal += REWARD_PER_AD; cnt++; update(); 
+    displayRewardMsg(t.rewardAddedConfirmed(`<b>${REWARD_PER_AD} TON</b>`));
+    resetAdBtnState(t);
+}
 
 function resetAdBtnState(t) {
     isAdRunning = false; adBtn.disabled = false; adBtn.classList.remove('waiting');
-    document.getElementById('adBtnText').textContent = t.watchAd; 
-    adMsg.textContent = (cnt >= MAX_ADS_PER_DAY) ? t.adLimitReached : ''; 
+    const textSpan = adBtnContent.querySelector('span');
+    if(textSpan) textSpan.textContent = t.watchAd; 
+    if (cnt >= MAX_ADS_PER_DAY) msg.textContent = t.adLimitReached; else msg.textContent = ''; 
 }
 
-document.getElementById('joinBtn').onclick = () => {
-    const btn = document.getElementById('joinBtn');
-    if (localStorage.getItem(JOIN_COMMUNITY_KEY) || btn.disabled) return; 
-    const t = TRANSLATIONS[currentLang];
-    
-    // AZX Crypto-nun yeni linki
-    window.open('https://t.me/azxcrypto', '_blank'); 
-    
-    btn.disabled = true; btn.classList.add('waiting'); 
-    btn.innerHTML = `<i data-lucide="loader" class="loader-icon" style="width:20px;height:20px;animation: pulse 1s infinite;"></i> ${t.wait.replace('{s}', '3')}`;
-    lucide.createIcons();
-    
-    setTimeout(() => {
-        bal += TASK_REWARD; safeSet(BAL_KEY, bal); localStorage.setItem(JOIN_COMMUNITY_KEY, '1'); update();
-        showToast(`+${TASK_REWARD} AZX!`);
-    }, 3000); 
-};
+const taskNotification = document.getElementById('taskNotification');
+const taskNotificationText = document.getElementById('taskNotificationText');
+function showTaskNotification(message) {
+    taskNotificationText.innerHTML = message;
+    taskNotification.classList.remove('notification-hide'); taskNotification.classList.add('notification-show');
+    setTimeout(() => { taskNotification.classList.remove('notification-show'); taskNotification.classList.add('notification-hide'); }, 3000);
+}
+
+// YENİ GÖREV LİNKİ: https://t.me/azxcrypto
+const joinBtn = document.getElementById('joinBtn');
+if (joinBtn) {
+    joinBtn.onclick = () => {
+        if (localStorage.getItem(JOIN_COMMUNITY_KEY) || joinBtn.disabled) return; 
+        const t = TRANSLATIONS[currentLang];
+        window.open('https://t.me/azxcrypto', '_blank'); 
+        joinBtn.disabled = true; joinBtn.classList.add('waiting'); 
+        joinBtn.innerHTML = `<i data-lucide="loader" style="width:20px;height:20px;animation:spinRing 1.5s linear infinite;"></i> ${t.wait.replace('{s}', '3')}`;
+        lucide.createIcons();
+        setTimeout(() => {
+            bal += TASK_REWARD; 
+            safeSet(BAL_KEY, bal); localStorage.setItem(JOIN_COMMUNITY_KEY, '1'); update();
+            showTaskNotification(t.taskSuccess(`<b>${TASK_REWARD} TON</b>`));
+        }, 3000); 
+    };
+}
 
 function showPage(id, btn){
   if (btn.classList.contains('active')) return; 
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   document.getElementById(id).classList.add('active');
-  document.querySelectorAll('.dock-btn').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('.menu button').forEach(b=>b.classList.remove('active'));
   btn.classList.add('active');
-  if (id === 'adsPage') restoreAdBtnState();
+  
+  if (id === 'adsPage') { restoreAdBtnState(); } 
+  else if (id === 'tasksPage') { updateTaskButtons(); } 
+  else {
+    let rewardMsgElement = document.getElementById('rewardMsg');
+    if (rewardMsgElement) rewardMsgElement.classList.remove('show');
+  }
 }
 
-document.getElementById('selectAzxMethod').onclick=()=>{
-  document.getElementById('methodsContainer').style.display='none'; document.getElementById('form').style.display='block';
-  const t = TRANSLATIONS[currentLang];
-  document.getElementById('details').placeholder = t.placeholderDetails_azx;
-  document.getElementById('amount').placeholder = t.placeholderAmount;
-  document.getElementById('details').value=''; document.getElementById('amount').value=''; document.getElementById('alert').style.display='none';
-};
+const methods = document.querySelectorAll('.method');
+const form = document.getElementById('form'); const details = document.getElementById('details');
+const amount = document.getElementById('amount'); const alertBox = document.getElementById('alert');
+const feeCalcBox = document.getElementById('feeCalcBox');
+const feeAmountSpan = document.getElementById('feeAmount');
+const receiveAmountSpan = document.getElementById('receiveAmount');
+let type = '';
+
+methods.forEach(m=>{
+  m.onclick=()=>{
+    type=m.dataset.type;
+    document.getElementById('methodsContainer').style.display='none'; 
+    form.style.display='block';
+    
+    const t = TRANSLATIONS[currentLang];
+    details.placeholder = t.placeholderDetails_ton; amount.placeholder = t.placeholderAmount;
+    details.value=''; amount.value=''; alertBox.style.display='none'; feeCalcBox.style.display='none';
+  };
+});
 
 document.getElementById('backBtn').onclick=()=>{
-  document.getElementById('form').style.display='none'; document.getElementById('methodsContainer').style.display='block';
+  form.style.display='none'; document.getElementById('methodsContainer').style.display='block'; alertBox.style.display='none'; type='';
 };
+
+function calculateFee() {
+    const amt = parseFloat(amount.value);
+    if (!isNaN(amt) && amt > 0) {
+        const fee = amt * FEE_PERCENT;
+        const receive = amt - fee;
+        feeAmountSpan.textContent = fee.toFixed(3);
+        receiveAmountSpan.textContent = receive.toFixed(3);
+        feeCalcBox.style.display = 'block';
+    } else { feeCalcBox.style.display = 'none'; }
+}
+amount.addEventListener('input', calculateFee);
 
 document.getElementById('withdrawBtn').onclick=()=>{
-  const det = document.getElementById('details').value.trim(); const amt = parseFloat(document.getElementById('amount').value);
-  const alrt = document.getElementById('alert'); alrt.style.display='none';
-  const t = TRANSLATIONS[currentLang];
+  const det = details.value.trim(); const amt = parseFloat(amount.value);
+  alertBox.style.display='none'; const t = TRANSLATIONS[currentLang];
 
-  if(!det){ alrt.textContent=t.detailsError; alrt.style.color="var(--color-red)"; alrt.style.display='block'; return; }
-  if(isNaN(amt) || amt <= 0){ alrt.textContent=t.amountError; alrt.style.color="var(--color-red)"; alrt.style.display='block'; return; }
-  if(amt < MIN_WITHDRAW - 0.0001){ alrt.textContent=t.minAmount; alrt.style.color="var(--color-red)"; alrt.style.display='block'; return; }
-  if(amt > bal + 0.0001){ alrt.textContent=t.balanceError; alrt.style.color="var(--color-red)"; alrt.style.display='block'; return; }
+  if(!type){ showErr(t.methodError); return; }
+  if(!det){ showErr(t.detailsError); return; }
+  if(isNaN(amt) || amt <= 0){ showErr(t.amountError); return; }
   
-  bal = Math.max(0, bal - amt); safeSet(BAL_KEY,bal); update();
+  const EPSILON = 0.0001; 
+  if(amt < MIN_WITHDRAW - EPSILON){ showErr(t.minAmount); return; }
+  if(amt > bal + EPSILON){ showErr(t.balanceError); return; }
   
-  alrt.textContent="✅ Success!"; alrt.style.color="var(--color-green)"; alrt.style.display='block';
-  setTimeout(()=>{ document.getElementById('form').style.display='none'; document.getElementById('methodsContainer').style.display='block'; alrt.style.display='none'; }, 2000);
+  bal = Math.max(0, bal - amt); 
+  safeSet(BAL_KEY,bal); update();
+  
+  const historyItem = { method: type, amount: amt, status: 'pending', date: Date.now() };
+  withdrawHistory.push(historyItem); safeSet(HISTORY_KEY, withdrawHistory); renderHistory(); 
+
+  alertBox.textContent=t.withdrawSuccess; alertBox.className='alert success'; alertBox.style.display='block';
+  setTimeout(()=>{
+    form.style.display='none'; document.getElementById('methodsContainer').style.display='block'; alertBox.style.display='none'; type='';
+  }, 2000);
 };
+
+function showErr(msg){ alertBox.textContent=msg; alertBox.className='alert error'; alertBox.style.display='block'; }
 
 update();
 applyTranslations(currentLang); 
+restoreAdBtnState();
 
-setTimeout(()=>{
-    const loader = document.getElementById('loader');
-    loader.style.opacity="0"; 
-    setTimeout(()=>loader.style.display="none", 500);
-}, 2000);
+// YENİ LOADING EKRANI HƏRƏKƏTİ
+setTimeout(() => {
+    const container = document.getElementById('loadingScreen');
+    if(container) {
+        container.style.opacity = "0";
+        setTimeout(() => container.style.display = "none", 600);
+    }
+}, 3000);
+
+const navMenu = document.querySelector('.menu');
+const initialWindowHeight = window.innerHeight;
+
+window.addEventListener('resize', () => {
+    if (window.innerHeight < initialWindowHeight - 100) { navMenu.style.display = 'none'; } 
+    else { navMenu.style.display = 'flex'; if(document.activeElement && document.activeElement.tagName === 'INPUT'){ document.activeElement.blur(); } }
+});
 </script>
 </body>
 </html>
