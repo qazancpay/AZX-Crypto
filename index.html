@@ -1069,7 +1069,7 @@ function restoreAdBtnState() {
     msg.textContent = ''; checkAndDisplayRewardMsg();
 }
 
-adBtn.onclick = async () => {
+adBtn.onclick = () => {
     update();
     
     const t = TRANSLATIONS[currentLang];
@@ -1089,18 +1089,23 @@ adBtn.onclick = async () => {
     const textSpan = adBtnContent.querySelector('span');
     if(textSpan) textSpan.textContent = t.watching; msg.textContent = '';
     
-    try {
-        if (window.Adsgram) {
-            const AdController = window.Adsgram.init({ blockId: "int-28280" });
-            await AdController.show();
-            giveAdReward(t);
-        } else {
-            resetAdBtnState(t);
-        }
-    } catch(e) {
-        console.error("Ad block, skipped or network error", e);
+    if (window.Adsgram) {
+        const ad = window.Adsgram.init({ blockId: "int-28280" });
+        
+        ad.show()
+          .then(() => {
+              // reward ver
+              giveAdReward(t);
+          })
+          .catch((err) => {
+              // İstifadəçi reklamı yarımçıq bağladıqda və ya xəta olanda
+              console.error("Adsgram xətası və ya bağlandı:", err);
+              resetAdBtnState(t);
+          });
+    } else {
+        console.error("Adsgram SDK tapılmadı.");
         resetAdBtnState(t);
-    } 
+    }
 };
 
 function giveAdReward(t) {
